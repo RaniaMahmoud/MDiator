@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MDiator.Tests.MDiatorTests
+namespace MDiator.Tests
 {
     public class EventTests
     {
@@ -16,6 +16,8 @@ namespace MDiator.Tests.MDiatorTests
         {
             var mock1 = new Mock<IMDiatorEventHandler<MyEvent>>();
             var mock2 = new Mock<IMDiatorEventHandler<MyEvent>>();
+
+            var cancellationToken = new CancellationTokenSource();
 
             var services = new ServiceCollection();
             services.AddMDiator(typeof(MyEvent).Assembly);
@@ -27,8 +29,8 @@ namespace MDiator.Tests.MDiatorTests
 
             await mediator.Publish(new MyEvent());
 
-            mock1.Verify(m => m.Handle(It.IsAny<MyEvent>()), Times.Once);
-            mock2.Verify(m => m.Handle(It.IsAny<MyEvent>()), Times.Once);
+            mock1.Verify(m => m.Handle(It.IsAny<MyEvent>(), cancellationToken.Token), Times.Once);
+            mock2.Verify(m => m.Handle(It.IsAny<MyEvent>(), cancellationToken.Token), Times.Once);
         }
     }
 }

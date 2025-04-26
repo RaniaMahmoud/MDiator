@@ -2,7 +2,7 @@
 using MDiator.Tests.Requests;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MDiator.Tests.MDiatorTests
+namespace MDiator.Tests
 {
     public class RequestTests
     {
@@ -15,8 +15,8 @@ namespace MDiator.Tests.MDiatorTests
 
             var provider = services.BuildServiceProvider();
             var mediator = provider.GetRequiredService<IMediator>();
-
-            var result = await mediator.Send(new MyRequest());
+            var cancellationToken = new CancellationTokenSource().Token;
+            var result = await mediator.Send(new MyRequest(), cancellationToken);
 
             Assert.Equal("Handled: Test", result);
         }
