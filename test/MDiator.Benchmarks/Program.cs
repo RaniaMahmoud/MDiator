@@ -1,4 +1,4 @@
 ﻿using BenchmarkDotNet.Running;
 using MDiator.Benchmarks;
 
-BenchmarkRunner.Run<ComparisonBenchmarks>();
+BenchmarkRunner.Run<MiddlewareBenchmarks>();
