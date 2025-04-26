@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace MDiator
 {
@@ -35,6 +37,13 @@ namespace MDiator
                 }
             }
 
+            return services;
+        }
+
+        public static IServiceCollection AddMediatorPipelineBehaviors(this IServiceCollection services)
+        {
+            services.AddTransient(typeof(IMediatorPipelineBehavior<,>), typeof(ErrorHandlingMiddleware<,>));
+            services.AddTransient(typeof(IMediatorPipelineBehavior<,>), typeof(ValidationMiddleware<,>));
             return services;
         }
     }
